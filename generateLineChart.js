@@ -1,7 +1,7 @@
 const { screen: blessedScreen } = require('blessed');
 const { line: blessedLine } = require('blessed-contrib');
 
-// const screen = blessedScreen();
+const screen = blessedScreen();
 
 const line = blessedLine({
   style: {
