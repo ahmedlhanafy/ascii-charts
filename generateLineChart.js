@@ -40,6 +40,7 @@ module.exports = dataArray => {
 
   screen.render();
   const screenshot = screen.screenshot();
+  console.log(screenshot);
   screen.destroy();
   return replaceAll(screenshot, ['[37m', '[m'], '');
 };
