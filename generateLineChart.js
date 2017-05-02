@@ -1,23 +1,29 @@
 const { screen: blessedScreen } = require('blessed');
 const { line: blessedLine } = require('blessed-contrib');
 
-const screen = blessedScreen();
-
-const line = blessedLine({
-  style: {
-    line: 'white',
-    text: 'white',
-    baseline: 'white',
-  },
-});
-
-const replaceAll = (str, findArray, replace) => {
-  let newStr = str;
-  findArray.forEach(find => newStr = newStr.split(find).join(replace));
-  return newStr;
-};
-
 module.exports = dataArray => {
+  const screen = blessedScreen({
+    width: 2,
+    height: 2,
+  });
+
+  screen.width = 2;
+  screen.height = 2;
+
+  const line = blessedLine({
+    style: {
+      line: 'white',
+      text: 'white',
+      baseline: 'white',
+    },
+  });
+
+  const replaceAll = (str, findArray, replace) => {
+    let newStr = str;
+    findArray.forEach(find => newStr = newStr.split(find).join(replace));
+    return newStr;
+  };
+
   const data = { x: [], y: [] };
 
   dataArray.forEach(entry => {
@@ -33,6 +39,7 @@ module.exports = dataArray => {
   });
 
   screen.render();
-
-  return replaceAll(screen.screenshot(), ['[37m', '[m'], '');
+  const screenshot = screen.screenshot();
+  screen.destroy();
+  return replaceAll(screenshot, ['[37m', '[m'], '');
 };
