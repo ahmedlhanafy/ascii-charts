@@ -11,15 +11,12 @@ module.exports = commaSeparatedData =>
     .split(',')
     .map(entry => entry.split(','))
     .map(arr => arr[0])
-    .reduce(
-      (a, b, index) => {
-        if (index % 2 === 0) {
-          a.push([b]);
-          return a;
-        } else {
-          a[a.length - 1].push(b);
-          return a;
-        }
-      },
-      []
-    );
+    .reduce((a, b, index) => {
+      if (index % 2 === 0) {
+        a.push([b]);
+        return a;
+      } else {
+        a[a.length - 1].push(b);
+        return a;
+      }
+    }, []);

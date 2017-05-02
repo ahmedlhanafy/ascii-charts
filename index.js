@@ -4,7 +4,7 @@ const parse = require('csv-parse/lib/sync');
 const generateLineChart = require('./generateLineChart');
 const generateBars = require('./generateBars');
 
-const allowCrossDomain = function (req, res, next) {
+const allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -14,9 +14,11 @@ const allowCrossDomain = function (req, res, next) {
 const app = express();
 
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(allowCrossDomain);
 
 app.post('/', (req, res) => {
@@ -25,11 +27,11 @@ app.post('/', (req, res) => {
     res.status('400').send('Please provide data field');
   }
   const method = req.body.method;
-  console.log('heyy')
+
   try {
     const data = parse(commaSeperatedData).map(arr => [
       arr[0],
-      parseFloat(arr[1], 10)
+      parseFloat(arr[1], 10),
     ]);
     console.log(data);
     if (method === 'bars') {

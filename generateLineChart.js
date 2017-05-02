@@ -7,7 +7,7 @@ const line = blessedLine({
   style: {
     line: 'white',
     text: 'white',
-    baseline: 'white'
+    baseline: 'white',
   },
 });
 
