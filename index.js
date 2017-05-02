@@ -33,7 +33,6 @@ app.post('/', (req, res) => {
       arr[0],
       parseFloat(arr[1], 10),
     ]);
-    console.log(data);
     if (method === 'bars') {
       res.send(generateBars(data, req.body.width, req.body.bar, req.body.sort));
     } else if (method === 'lines') {
