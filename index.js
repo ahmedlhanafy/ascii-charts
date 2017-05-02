@@ -22,6 +22,7 @@ app.use(
 app.use(allowCrossDomain);
 
 app.post('/', (req, res) => {
+  console.log(process.env.TERM);
   const commaSeperatedData = req.body.data;
   if (!commaSeperatedData) {
     res.status('400').send('Please provide data field');
