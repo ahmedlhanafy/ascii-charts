@@ -3,12 +3,12 @@ const { line: blessedLine } = require('blessed-contrib');
 
 module.exports = dataArray => {
   const screen = blessedScreen({
-    width: 2,
-    height: 2,
+    width: '20%',
+    height: '30%',
   });
 
-  screen.width = 2;
-  screen.height = 2;
+  // screen.width = '10%';
+  // screen.height = '50%';
 
   const line = blessedLine({
     style: {
@@ -16,6 +16,7 @@ module.exports = dataArray => {
       text: 'white',
       baseline: 'white',
     },
+    xPadding: 10,
   });
 
   const replaceAll = (str, findArray, replace) => {
@@ -33,6 +34,9 @@ module.exports = dataArray => {
 
   screen.append(line); //must append before setting data
   line.setData([data]);
+
+  // line.height = 'shrink';
+  // line.width = 'shrink';
 
   screen.key(['escape', 'q', 'C-c'], function(ch, key) {
     return process.exit(0);
