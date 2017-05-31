@@ -30,6 +30,12 @@
 
     <div class="jumbotron " style="height: 100vh">
         <div class="container">
+            <div class="alert alert-danger alert-dismissible fade show" id="alert" style="display: none" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span id="alertText"></span>
+            </div>
             <form>
                 <div class="form-group">
                     <label for="exampleInputFile">Upload CSV file</label>
@@ -52,7 +58,7 @@
                     </div>
 
                 </fieldset>
-                <button type="submit" class="btn btn-primary">Upload</button>
+                <button disabled type="submit" id="btnSubmit" class="btn btn-primary">Upload</button>
             </form>
             <br>
         </div>
@@ -70,6 +76,16 @@
             var objFormData;
             var uploadFile = document.getElementById('upload-input');
             var result = document.getElementById('result');
+            var alertComp = document.getElementById('alert');
+            var alertText = document.getElementById('alertText');
+            var btnSubmit = document.getElementById('btnSubmit');
+            $('input[type=file]').change(function () {
+                if (uploadFile.files.length >= 1) {
+                    btnSubmit.disabled = false;
+                } else {
+                    btnSubmit.disabled = true;
+                }
+            })
             $('form').on('submit', function () {
                 var selectedType = $('input[name="type"]:checked').val();
                 objFormData = new FormData();
@@ -79,8 +95,18 @@
                     method: 'POST',
                     body: objFormData
                 }).then(function (response) {
-                    return response.text();
-                }).then((text) => result.innerText = text).catch(console.log);
+                    if (response.ok) {
+                        alertComp.style = "display: none";
+                        response.text().then(function (text) {
+                            result.innerText = text
+                        });
+                    } else {
+                        alertComp.style = "display: block";
+                        alertText.innerHTML = "<strong>" + response.statusText + "</strong>"
+                    }
+                }).catch(function (err) {
+                    console.log(err)
+                })
                 return false;
             })
 
