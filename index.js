@@ -54,10 +54,10 @@ app.post('/', (req, res) => {
 
 const generateCharts = (res, commaSeperatedText, method, width, bar, sort) => {
   try {
-    const data = parse(commaSeperatedText).map(arr => [
-      arr[0],
-      parseFloat(arr[1], 10),
-    ]);
+    const data = parse(commaSeperatedText)
+      .map(arr => [arr[0], parseFloat(arr[1], 10)])
+      .filter(arr => !isNaN(arr[1]));
+
     if (method === 'bars') {
       res.send(generateBars(data, width, bar, sort));
     } else if (method === 'lines') {
