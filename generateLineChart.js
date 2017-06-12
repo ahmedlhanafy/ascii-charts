@@ -21,7 +21,7 @@ module.exports = dataArray => {
 
   const replaceAll = (str, findArray, replace) => {
     let newStr = str;
-    findArray.forEach(find => newStr = newStr.split(find).join(replace));
+    findArray.forEach(find => (newStr = newStr.split(find).join(replace)));
     return newStr;
   };
 

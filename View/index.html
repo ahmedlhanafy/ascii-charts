@@ -8,10 +8,20 @@
     <title>ASCII Charts</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
         crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
 </head>
 
 <body>
+    <style>
+        body {
+            font-family: 'Fira Mono', monospace;
+        }
 
+        textarea {
+            font-family: inherit;
+            font-size: inherit;
+        }
+    </style>
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +77,8 @@
             <textarea disabled style="min-height: 340px" class="form-control" name="results" id="result"></textarea>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.0/es6-promise.auto.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
@@ -86,7 +98,8 @@
                     btnSubmit.disabled = true;
                 }
             })
-            $('form').on('submit', function () {
+            $('form').on('submit', function (e) {
+                e.preventDefault();
                 var selectedType = $('input[name="type"]:checked').val();
                 objFormData = new FormData();
                 objFormData.append('file', uploadFile.files[0]);
