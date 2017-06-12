@@ -1,19 +1,10 @@
 const { screen: blessedScreen } = require('blessed');
 const { line: blessedLine } = require('blessed-contrib');
 
-module.exports = dataArray => {
-  const screen = blessedScreen(
-    {
-      // width: '20%',
-      // height: '30%',
-    }
-  );
-
-  // screen.width = '10%';
-  // screen.height = '50%';
+module.exports = (dataArray1 = [], dataArray2 = []) => {
+  const screen = blessedScreen();
 
   const line = blessedLine({
-    // width: '100%',
     width: 44,
     height: 12,
 
@@ -31,15 +22,22 @@ module.exports = dataArray => {
     return newStr;
   };
 
-  const data = { x: [], y: [] };
+  const data1 = { x: [], y: [] };
+  const data2 = { x: [], y: [] };
 
-  dataArray.forEach(entry => {
-    if (entry[0] !== '') data.x.push(entry[0]);
-    if (entry[1] !== undefined) data.y.push(entry[1]);
+  dataArray1.forEach(entry => {
+    if (entry[0] !== '') data1.x.push(entry[0]);
+    if (entry[1] !== undefined) data1.y.push(entry[1]);
+  });
+
+  dataArray2.forEach(entry => {
+    if (entry[0] !== '') data2.x.push(entry[0]);
+    if (entry[1] !== undefined) data2.y.push(entry[1]);
   });
 
   screen.append(line); //must append before setting data
-  line.setData([data]);
+
+  line.setData([data1, data2]);
 
   // line.height = 'shrink';
   // line.width = 'shrink';

@@ -53,20 +53,32 @@ app.post('/', (req, res) => {
 });
 
 const generateCharts = (res, commaSeperatedText, method, width, bar, sort) => {
-  try {
+  if (method === 'bars') {
     const data = parse(commaSeperatedText)
       .map(arr => [arr[0], parseFloat(arr[1], 10)])
       .filter(arr => !isNaN(arr[1]));
 
-    if (method === 'bars') {
-      res.send(generateBars(data, width, bar, sort));
-    } else if (method === 'lines') {
-      res.send(generateLineChart(data, width));
-    } else {
-      res.status('400').send('Please provide a valid method to use');
-    }
-  } catch (e) {
-    res.status('400').send('CSV text is malformed');
+    res.send(generateBars(data, width, bar, sort));
+  } else if (method === 'lines') {
+    const data = parse(commaSeperatedText).reduce((a, b, i) => {
+      if (i === 0) {
+        a.push([b]);
+        return a;
+      }
+      if (b[0].toLowerCase() === 'trim') {
+        a.push([]);
+        return a;
+      } else if (a.length === 2) {
+        a[1].push(b);
+        return a;
+      }
+      a[0].push(b);
+      return a;
+    }, []);
+    data.forEach(vals => vals.map(arr => [arr[0], parseFloat(arr[1], 10)]));
+    res.send(generateLineChart(data[0], data[1], width));
+  } else {
+    res.status('400').send('Please provide a valid method to use');
   }
 };
 
