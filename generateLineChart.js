@@ -2,15 +2,21 @@ const { screen: blessedScreen } = require('blessed');
 const { line: blessedLine } = require('blessed-contrib');
 
 module.exports = dataArray => {
-  const screen = blessedScreen({
-    width: '20%',
-    height: '30%',
-  });
+  const screen = blessedScreen(
+    {
+      // width: '20%',
+      // height: '30%',
+    }
+  );
 
   // screen.width = '10%';
   // screen.height = '50%';
 
   const line = blessedLine({
+    // width: '100%',
+    width: 44,
+    height: 12,
+
     style: {
       line: 'white',
       text: 'white',
