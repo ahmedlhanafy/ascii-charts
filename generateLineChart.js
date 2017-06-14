@@ -2,26 +2,6 @@ const { screen: blessedScreen } = require('blessed');
 const { line: blessedLine } = require('blessed-contrib');
 
 module.exports = (dataArray1 = [], dataArray2 = []) => {
-  const screen = blessedScreen();
-
-  const line = blessedLine({
-    width: 44,
-    height: 12,
-
-    style: {
-      line: 'white',
-      text: 'white',
-      baseline: 'white',
-    },
-    xPadding: 10,
-  });
-
-  const replaceAll = (str, findArray, replace) => {
-    let newStr = str;
-    findArray.forEach(find => (newStr = newStr.split(find).join(replace)));
-    return newStr;
-  };
-
   const data1 = { x: [], y: [] };
   const data2 = { x: [], y: [] };
 
@@ -34,6 +14,32 @@ module.exports = (dataArray1 = [], dataArray2 = []) => {
     if (entry[0] !== '') data2.x.push(entry[0]);
     if (entry[1] !== undefined) data2.y.push(entry[1]);
   });
+  const screen = blessedScreen(
+    {
+      // width: '100%',
+      // height: '100%',
+    }
+  );
+
+  const line = blessedLine({
+    width: 44,
+    height: 12,
+
+    wholeNumbersOnly: true,
+    style: {
+      line: 'white',
+      text: 'white',
+      baseline: 'white',
+    },
+    xPadding: 10,
+    maxY: Math.max(...data1.y) + 5,
+  });
+
+  const replaceAll = (str, findArray, replace) => {
+    let newStr = str;
+    findArray.forEach(find => (newStr = newStr.split(find).join(replace)));
+    return newStr;
+  };
 
   screen.append(line); //must append before setting data
 
