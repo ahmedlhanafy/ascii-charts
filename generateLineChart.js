@@ -32,7 +32,9 @@ module.exports = (dataArray1 = [], dataArray2 = []) => {
       baseline: 'white',
     },
     xPadding: 10,
-    maxY: Math.max(...data1.y) + 5,
+    maxY: Math.max(...data1.y) > Math.max(...data1.y)
+      ? Math.max(...data1.y)
+      : Math.max(...data2.y) + 7,
   });
 
   const replaceAll = (str, findArray, replace) => {
