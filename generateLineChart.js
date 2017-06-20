@@ -1,6 +1,5 @@
 const { screen: blessedScreen } = require('blessed');
 const { line: blessedLine } = require('blessed-contrib');
-
 module.exports = (dataArray1 = [], dataArray2 = []) => {
   const data1 = { x: [], y: [] };
   const data2 = { x: [], y: [] };
@@ -14,12 +13,8 @@ module.exports = (dataArray1 = [], dataArray2 = []) => {
     if (entry[0] !== '') data2.x.push(entry[0]);
     if (entry[1] !== undefined) data2.y.push(entry[1]);
   });
-  const screen = blessedScreen(
-    {
-      // width: '100%',
-      // height: '100%',
-    }
-  );
+
+  const screen = blessedScreen();
 
   const line = blessedLine({
     width: 44,
@@ -32,9 +27,10 @@ module.exports = (dataArray1 = [], dataArray2 = []) => {
       baseline: 'white',
     },
     xPadding: 10,
-    maxY: Math.max(...data1.y) > Math.max(...data1.y)
-      ? Math.max(...data1.y)
-      : Math.max(...data2.y) + 7,
+    maxY:
+      (Math.max(...data1.y) > Math.max(...data2.y)
+        ? Math.max(...data1.y)
+        : Math.max(...data2.y)) + 7,
   });
 
   const replaceAll = (str, findArray, replace) => {
